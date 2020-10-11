@@ -6,7 +6,7 @@
 #    By: haachtch <haachtch@student.codam.n>          +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/08/31 19:48:29 by haachtch      #+#    #+#                  #
-#    Updated: 2020/10/11 21:35:12 by haachtch      ########   odam.nl          #
+#    Updated: 2020/10/11 21:40:20 by haachtch      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -71,7 +71,7 @@ $(OBJ): $(OBJ_D)/%.o: $(SRC_D)/%.c
 
 clean:
 		rm -rf $(OBJ_D)
-//		rm	-rf *.dSYM
+		rm	-rf *.dSYM
 
 fclean: clean
 	rm -f $(NAME)
