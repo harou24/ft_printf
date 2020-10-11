@@ -1,39 +1,77 @@
 # **************************************************************************** #
 #                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: ybakker <ybakker@student.42.fr>            +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2019/11/01 10:51:58 by ybakker           #+#    #+#              #
-#    Updated: 2020/01/09 21:09:19 by haachtch      ########   odam.nl          #
+#                                                         ::::::::             #
+#    Makefile                                           :+:    :+:             #
+#                                                      +:+                     #
+#    By: haachtch <haachtch@student.codam.n>          +#+                      #
+#                                                    +#+                       #
+#    Created: 2020/08/31 19:48:29 by haachtch      #+#    #+#                  #
+#    Updated: 2020/10/11 21:20:00 by haachtch      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
-NAME	= libftprintf.a
+NAME	=	libftprintf.a
 
-SRC		= ft_atoi.c ft_detect.c ft_init_struct.c ft_isdigit.c ft_isdigit2.c\
-		 ft_itoa.c ft_itoa2.c ft_print_char.c ft_print_int2.c\
-			ft_print_int_width_and_dot.c ft_print_int_zero_and_dot.c\
-			ft_print_percent.c ft_print_pointer.c ft_putchar.c\
-			ft_print_space_zero_function.c ft_print_x.c ft_strdup.c\
-			ft_print_string.c ft_print_u.c ft_print_u2.c ft_print_u3.c\
-			ft_print_x2.c ft_print_x3.c ft_printf.c ft_printf_utils.c\
-			ft_putnbr.c ft_putnbr_hex.c ft_putstr.c ft_putstrn.c ft_star.c\
-			ft_strlcpy.c ft_strlen.c ft_substr.c
+SRC_D  = src
+INC_D = inc
+OBJ_D = obj
 
-OBJ		= $(SRC:.c=.o)
-CFLAG	= -Wall -Wextra -Werror
+SRC = $(SRC_D)/ft_atoi.c\
+	  $(SRC_D)/ft_detect.c\
+	  $(SRC_D)/ft_init_struct.c\
+	  $(SRC_D)/ft_isdigit.c\
+	  $(SRC_D)/ft_isdigit2.c\
+	  $(SRC_D)/ft_itoa.c\
+	  $(SRC_D)/ft_itoa2.c\
+	  $(SRC_D)/ft_print_char.c\
+	  $(SRC_D)/ft_print_int2.c\
+	  $(SRC_D)/ft_print_int_width_and_dot.c\
+	  $(SRC_D)/ft_print_int_zero_and_dot.c\
+	  $(SRC_D)/ft_print_percent.c\
+	  $(SRC_D)/ft_print_pointer.c\
+	  $(SRC_D)/ft_putchar.c\
+	  $(SRC_D)/ft_print_space_zero_function.c\
+	  $(SRC_D)/ft_print_x.c\
+	  $(SRC_D)/ft_strdup.c\
+	  $(SRC_D)/ft_print_string.c\
+	  $(SRC_D)/ft_print_u.c\
+	  $(SRC_D)/ft_print_u2.c\
+	  $(SRC_D)/ft_print_u3.c\
+	  $(SRC_D)/ft_print_x2.c\
+	  $(SRC_D)/ft_print_x3.c\
+	  $(SRC_D)/ft_printf.c\
+	  $(SRC_D)/ft_printf_utils.c\
+	  $(SRC_D)/ft_putnbr.c\
+	  $(SRC_D)/ft_putnbr_hex.c\
+	  $(SRC_D)/ft_putstr.c\
+	  $(SRC_D)/ft_putstrn.c\
+	  $(SRC_D)/ft_star.c\
+	  $(SRC_D)/ft_strlcpy.c\
+	  $(SRC_D)/ft_strlen.c\
+	  $(SRC_D)/ft_substr.c
+
+INC =		$(INC_D)/libftprintf.h
+
+OBJ := $(SRC:$(SRC_D)/%.c=$(OBJ_D)/%.o)
+
+CC = clang
+CC_FLAGS	=	-Wall -Wextra -Werror
+AR_COMMAND	=	ar rsv
 
 all: $(NAME)
 
-$(NAME):
-	gcc $(CFLAG) -c -I ./libft $(SRC)
-	ar rc $(NAME) *.o
-	ranlib $(NAME)
+$(NAME): $(OBJ_D) $(OBJ) $(INC_D) $(INC)
+			$(AR_COMMAND) $(NAME) $(OBJ)
+
+$(OBJ_D):
+		mkdir -p $(OBJ_D)
+
+$(OBJ): $(OBJ_D)/%.o: $(SRC_D)/%.c
+		@$(CC) $(CC_FLAGS) -I$(INC_D) -c $< -o $@
 
 clean:
-	rm -f *.o
+		rm -rf $(OBJ_D)
+		rm	-rf *.dSYM
 
 fclean: clean
 	rm -f $(NAME)
